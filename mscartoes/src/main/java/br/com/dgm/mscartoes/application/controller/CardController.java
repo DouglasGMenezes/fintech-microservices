@@ -1,13 +1,13 @@
 package br.com.dgm.mscartoes.application.controller;
 
 import br.com.dgm.mscartoes.application.mapper.CardMapper;
-import br.com.dgm.mscartoes.application.representation.CardCustumerRS;
-import br.com.dgm.mscartoes.application.representation.CardRequest;
-import br.com.dgm.mscartoes.application.representation.CardResponse;
-import br.com.dgm.mscartoes.application.service.CardCustumerService;
+import br.com.dgm.mscartoes.application.representation.CardCustomerRS;
+import br.com.dgm.mscartoes.application.representation.CardRQ;
+import br.com.dgm.mscartoes.application.representation.CardRS;
+import br.com.dgm.mscartoes.application.service.CardCustomerService;
 import br.com.dgm.mscartoes.application.service.CardService;
 import br.com.dgm.mscartoes.domain.model.Card;
-import br.com.dgm.mscartoes.domain.model.CardCustumer;
+import br.com.dgm.mscartoes.domain.model.CardCustomer;
 import lombok.extern.slf4j.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ import java.util.List;
 public class CardController {
 
     private final CardService cardService;
-    private final CardCustumerService cardCustumerService;
+    private final CardCustomerService cardCustomerService;
 
     @GetMapping("/status")
     public String status() {
@@ -32,24 +32,24 @@ public class CardController {
     }
 
     @PostMapping
-    public ResponseEntity<CardResponse> create(@RequestBody CardRequest rq) {
+    public ResponseEntity<CardRS> create(@RequestBody CardRQ rq) {
         Card card = CardMapper.toEntity(rq);
         Card savedCard = cardService.save(card);
-        CardResponse rs = CardMapper.toDTO(savedCard);
+        CardRS rs = CardMapper.toDTO(savedCard);
         return ResponseEntity.ok(rs);
     }
 
     @GetMapping("/card-list")
-    public ResponseEntity<List<CardResponse>> getCardListByIncome(@RequestParam("income") BigDecimal income) {
+    public ResponseEntity<List<CardRS>> getCardListByIncome(@RequestParam("income") BigDecimal income) {
         List<Card> list = cardService.getCardIncome(income);
-        List<CardResponse> rs = CardMapper.toListRsDTO(list);
+        List<CardRS> rs = CardMapper.toListRsDTO(list);
         return ResponseEntity.ok(rs);
     }
 
     @GetMapping("/{taxId}")
-    public ResponseEntity<List<CardCustumerRS>> getCardCustumerByTaxId(@PathVariable("taxId") String taxId) {
-        List<CardCustumer> list = cardCustumerService.getByTaxId(taxId);
-        List<CardCustumerRS> rs = CardMapper.toListCardCustumerDTO(list);
+    public ResponseEntity<List<CardCustomerRS>> getCardCustumerByTaxId(@PathVariable("taxId") String taxId) {
+        List<CardCustomer> list = cardCustomerService.getByTaxId(taxId);
+        List<CardCustomerRS> rs = CardMapper.toListCardCustomerDTO(list);
         return ResponseEntity.ok(rs);
     }
 

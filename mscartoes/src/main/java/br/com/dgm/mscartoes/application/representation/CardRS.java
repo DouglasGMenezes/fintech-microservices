@@ -2,7 +2,7 @@ package br.com.dgm.mscartoes.application.representation;
 
 import java.math.BigDecimal;
 
-public record CardResponse(
+public record CardRS(
         Long id,
         String holderName,
         String cardBrand,
