@@ -30,7 +30,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createCliente(@RequestBody CustomerRequestDTO request) {
+    public ResponseEntity<Void> createCustomer(@RequestBody CustomerRequestDTO request) {
         Customer customer = CustomerMapper.toEntity(request);
         customerService.create(customer);
         URI headerLocation = ServletUriComponentsBuilder
@@ -41,8 +41,8 @@ public class CustomerController {
         return ResponseEntity.created(headerLocation).build();
     }
 
-    @GetMapping
-    public ResponseEntity<CustomerResponseDTO> getClienteByCpf(@RequestParam("taxId") String taxId) {
+    @GetMapping(params="taxId")
+    public ResponseEntity<CustomerResponseDTO> getCustomerByTaxId(@RequestParam("taxId") String taxId) {
         return customerService.getByTaxId(taxId)
                 .map(CustomerMapper::toResponseDTO)
                 .map(ResponseEntity::ok)
@@ -50,7 +50,7 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerResponseDTO> editCliente(@RequestBody CustomerRequestDTO clienteRqDTO, @PathVariable("id") Long id) {
+    public ResponseEntity<CustomerResponseDTO> editCustomer(@RequestBody CustomerRequestDTO clienteRqDTO, @PathVariable("id") Long id) {
         Customer customer = customerService.update(id, clienteRqDTO);
         return ResponseEntity.ok(CustomerMapper.toRsUpdadeDto(customer));
     }

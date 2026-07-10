@@ -1,6 +1,7 @@
 package br.com.dgm.msavaliadorcredito.application.mapper;
 
 import br.com.dgm.msavaliadorcredito.application.representation.CustomerCardDTO;
+import br.com.dgm.msavaliadorcredito.application.representation.CustomerStatusDTO;
 import br.com.dgm.msavaliadorcredito.domain.model.CustomerCard;
 
 public class CustomerCardMapper {
