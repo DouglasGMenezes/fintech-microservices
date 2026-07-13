@@ -1,5 +1,6 @@
 package br.com.dgm.msavaliadorcredito.application.controller;
 
+import br.com.dgm.msavaliadorcredito.application.mapper.CustomerStatusMapper;
 import br.com.dgm.msavaliadorcredito.application.representation.CustomerStatusDTO;
 import br.com.dgm.msavaliadorcredito.application.service.CreditEvaluationService;
 import br.com.dgm.msavaliadorcredito.domain.model.CustomerStatus;
@@ -29,8 +30,8 @@ public class CreditEvaluationController {
     @GetMapping(value="/custumer-status", params="cpf")
     public ResponseEntity<CustomerStatusDTO> getStatusCustumerByTaxId(@RequestParam("cpf") String taxId) {
         CustomerStatus customerStatus = creditEvaluationService.getCustomerStatus(taxId);
-        CustomerStatusDTO toDto;
-        return null;
+        CustomerStatusDTO response = CustomerStatusMapper.toDto(customerStatus);
+        return ResponseEntity.ok(response);
     }
 
 }

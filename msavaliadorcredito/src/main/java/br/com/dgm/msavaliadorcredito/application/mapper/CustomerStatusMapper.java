@@ -1,23 +1,32 @@
 package br.com.dgm.msavaliadorcredito.application.mapper;
 
+import br.com.dgm.msavaliadorcredito.application.representation.CustomerCardDTO;
+import br.com.dgm.msavaliadorcredito.application.representation.CustomerDataDTO;
 import br.com.dgm.msavaliadorcredito.application.representation.CustomerStatusDTO;
 import br.com.dgm.msavaliadorcredito.domain.model.CustomerStatus;
+import java.util.List;
 
-public class CustomerStatusMapper() {
+public class CustomerStatusMapper {
 
     public static CustomerStatusDTO toDto(CustomerStatus customerStatus) {
-        return new CustomerStatusDTO(
+        CustomerDataDTO customerDataDTO = new CustomerDataDTO(
                 customerStatus.getCustomerData().getId(),
-                customerStatus.getCustomerCard()
+                customerStatus.getCustomerData().getName()
+        );
+        List<CustomerCardDTO> customerCardDTOs = customerStatus.getCustomerCard()
+                .stream()
+                .map(card -> new CustomerCardDTO(
+                        card.getHoldernName(),
+                        card.getCardBrand(),
+                        card.getApprovedLimit()
+              ))
+                .toList();
+        return new CustomerStatusDTO(
+                customerDataDTO,
+                customerCardDTOs
         );
     }
-//
-//    public static CardCustomerRS toCardCustomerDTO(CardCustomer cardCustomer) {
-//        return new CardCustomerRS(
-//                cardCustomer.getCard().getHolderName(),
-//                cardCustomer.getCard().getCardBrand().toString(),
-//                cardCustomer.getApprovedLimit()
-//        );
-//    }
-//
+
+
+
 }

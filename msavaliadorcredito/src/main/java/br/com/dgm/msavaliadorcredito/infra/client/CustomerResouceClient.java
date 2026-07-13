@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface CustomerResouceClient {
 
     @GetMapping(params="taxId")
-    ResponseEntity<CustomerData> getCustomerByTaxId(@RequestParam("taxId") String taxId);
+    ResponseEntity<CustomerResponseDTO> getCustomerByTaxId(@RequestParam("taxId") String taxId);
 
 }
