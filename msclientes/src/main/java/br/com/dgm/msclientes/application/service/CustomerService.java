@@ -35,7 +35,7 @@ public class CustomerService {
     }
 
     public Optional<Customer> getByTaxId(String taxId) {
-        return customerRepository.findByCpf(taxId);
+        return customerRepository.findByTaxId(taxId);
     }
 
     private Customer validationId(Long id) {
