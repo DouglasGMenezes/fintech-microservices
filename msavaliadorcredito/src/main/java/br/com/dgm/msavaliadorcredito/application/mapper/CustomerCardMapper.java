@@ -1,21 +1,24 @@
 package br.com.dgm.msavaliadorcredito.application.mapper;
 
-import br.com.dgm.msavaliadorcredito.application.representation.CustomerCardDTO;
-import br.com.dgm.msavaliadorcredito.application.representation.CustomerStatusDTO;
 import br.com.dgm.msavaliadorcredito.domain.model.CustomerCard;
+import br.com.dgm.msavaliadorcredito.infra.client.dto.CardCustomerRS;
+
+import java.util.List;
 
 public class CustomerCardMapper {
 
-    public CustomerCard toEntity(CustomerCardDTO customerDto) {
+    public static CustomerCard toDomain(CardCustomerRS customerDto) {
         return CustomerCard.builder()
-                .holdernName(customerDto.holdernName())
+                .holderName(customerDto.holderName())
                 .cardBrand(customerDto.cardBrand())
                 .approvedLimit(customerDto.approvedLimit())
                 .build();
     }
 
-    public CustomerCardDTO toDTO() {
-        return null;
+    public static List<CustomerCard> toDomain(List<CardCustomerRS> cards) {
+        return cards.stream()
+                .map(CustomerCardMapper::toDomain)
+                .toList();
     }
 
 }

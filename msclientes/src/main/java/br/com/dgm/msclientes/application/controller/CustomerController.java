@@ -36,7 +36,7 @@ public class CustomerController {
         URI headerLocation = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .query("taxId={taxId}")
-                .buildAndExpand(customer.getTaxId())//
+                .buildAndExpand(customer.getTaxId())
                 .toUri();
         return ResponseEntity.created(headerLocation).build();
     }

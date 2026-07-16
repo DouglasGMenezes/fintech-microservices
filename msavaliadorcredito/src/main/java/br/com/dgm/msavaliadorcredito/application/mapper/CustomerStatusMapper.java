@@ -16,7 +16,7 @@ public class CustomerStatusMapper {
         List<CustomerCardDTO> customerCardDTOs = customerStatus.getCustomerCard()
                 .stream()
                 .map(card -> new CustomerCardDTO(
-                        card.getHoldernName(),
+                        card.getHolderName(),
                         card.getCardBrand(),
                         card.getApprovedLimit()
               ))

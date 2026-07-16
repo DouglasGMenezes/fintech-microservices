@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Builder
 public class CustomerCard {
 
-    private String holdernName;
+    private String holderName;
     private String cardBrand;
     private BigDecimal approvedLimit;
 

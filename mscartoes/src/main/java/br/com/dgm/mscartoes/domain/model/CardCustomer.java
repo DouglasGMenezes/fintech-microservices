@@ -18,6 +18,7 @@ public class CardCustomer {
     //@JoinColumn(name = "id_card")
     @Transient
     private Card card;
+    private String taxId;
     @Column(name = "approved_limit")
     private BigDecimal approvedLimit;
 
