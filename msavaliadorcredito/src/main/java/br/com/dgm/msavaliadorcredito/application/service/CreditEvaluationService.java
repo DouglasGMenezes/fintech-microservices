@@ -36,6 +36,8 @@ public class CreditEvaluationService {
                     .customerCard(customerCard)
                     .build();
 
+        } catch (FeignException.NotFound ex) {
+            throw new CustomerDataNotFoundException(taxId);
         } catch (FeignException | ResourceAccessException ex) {
             throw new ErrorConnectionMicroserviceException(
                     "Falha ao comunicar com microserviços externos",
