@@ -2,16 +2,14 @@ package br.com.dgm.msavaliadorcredito.application.controller;
 
 import br.com.dgm.msavaliadorcredito.application.mapper.CustomerStatusMapper;
 import br.com.dgm.msavaliadorcredito.application.representation.CustomerStatusDTO;
+import br.com.dgm.msavaliadorcredito.application.representation.EvaluationDataDTO;
 import br.com.dgm.msavaliadorcredito.application.service.CreditEvaluationService;
+import br.com.dgm.msavaliadorcredito.domain.model.EvaluationCustomer;
 import br.com.dgm.msavaliadorcredito.domain.model.CustomerStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -34,4 +32,12 @@ public class CreditEvaluationController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping
+    public ResponseEntity<EvaluationCustomer> calculateEvaluation(@RequestBody EvaluationDataDTO evaluationData) {
+        EvaluationCustomer result = creditEvaluationService.calculateEvaluation(
+                evaluationData.taxId(),
+                evaluationData.income()
+        );
+        return ResponseEntity.ok(result);
+    }
 }

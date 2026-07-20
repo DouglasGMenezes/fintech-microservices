@@ -9,6 +9,7 @@ public class CustomerDataMapper {
         CustomerData customerData = new CustomerData();
         customerData.setId(dto.id());
         customerData.setName(dto.name());
+        customerData.setAge(dto.age());
         return customerData;
     }
 
