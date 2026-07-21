@@ -36,9 +36,10 @@ public class CardMapper {
     }
 
     public static CardCustomerRS toCardCustomerDTO(CardCustomer cardCustomer) {
+        Card card = cardCustomer.getCard();
         return new CardCustomerRS(
-                cardCustomer.getCard().getHolderName(),
-                cardCustomer.getCard().getCardBrand().toString(),
+                card != null ? card.getHolderName() : null,
+                card != null && card.getCardBrand() != null ? card.getCardBrand().toString() : null,
                 cardCustomer.getApprovedLimit()
         );
     }

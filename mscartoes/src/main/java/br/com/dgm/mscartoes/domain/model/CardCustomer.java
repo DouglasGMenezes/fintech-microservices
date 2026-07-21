@@ -14,9 +14,9 @@ public class CardCustomer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //@ManyToMany
-    //@JoinColumn(name = "id_card")
-    @Transient
+
+    @ManyToOne
+    @JoinColumn(name = "id_card")
     private Card card;
     private String taxId;
     @Column(name = "approved_limit")
