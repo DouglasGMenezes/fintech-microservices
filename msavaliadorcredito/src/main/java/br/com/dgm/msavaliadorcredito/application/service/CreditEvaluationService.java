@@ -1,6 +1,7 @@
 package br.com.dgm.msavaliadorcredito.application.service;
 
 import br.com.dgm.msavaliadorcredito.application.exceptions.CustomerDataNotFoundException;
+import br.com.dgm.msavaliadorcredito.application.exceptions.ErrorCardRequestException;
 import br.com.dgm.msavaliadorcredito.application.exceptions.ErrorConnectionMicroserviceException;
 import br.com.dgm.msavaliadorcredito.application.mapper.CustomerCardMapper;
 import br.com.dgm.msavaliadorcredito.application.mapper.CustomerDataMapper;
@@ -11,6 +12,7 @@ import br.com.dgm.msavaliadorcredito.infra.client.CustomerResouceClient;
 import br.com.dgm.msavaliadorcredito.infra.client.dto.CardCustomerRS;
 import br.com.dgm.msavaliadorcredito.infra.client.dto.CardRS;
 import br.com.dgm.msavaliadorcredito.infra.client.dto.CustomerResponseDTO;
+import br.com.dgm.msavaliadorcredito.infra.mqueue.CardIssuanceRequestPublisher;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +31,7 @@ public class CreditEvaluationService {
 
     private final CustomerResouceClient customerResouceClient;
     private final CardResourceClient cardResourceClient;
+    private final CardIssuanceRequestPublisher cardIssuanceRequestPublisher;
 
     public CustomerStatus getCustomerStatus(String taxId) {
         try {
@@ -68,6 +72,16 @@ public class CreditEvaluationService {
                     "Falha ao comunicar com microserviços externos",
                     ex
             );
+        }
+    }
+
+    public CardIssuanceProtocol cardIssuanceRequest(CardIssuanceRequestData data) {
+        try {
+            cardIssuanceRequestPublisher.cardResquet(data);
+            var protocol = UUID.randomUUID().toString();
+            return new CardIssuanceProtocol(protocol);
+        } catch (Exception e) {
+            throw new ErrorCardRequestException(e.getMessage());
         }
     }
 

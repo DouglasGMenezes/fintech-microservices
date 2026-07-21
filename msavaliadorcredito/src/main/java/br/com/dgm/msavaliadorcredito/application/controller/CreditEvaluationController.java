@@ -24,7 +24,6 @@ import java.util.UUID;
 public class CreditEvaluationController {
 
     private final CreditEvaluationService creditEvaluationService;
-    private final CardIssuanceRequestPublisher cardIssuanceRequestPublisher;
 
     @GetMapping
     public String status() {
@@ -48,14 +47,6 @@ public class CreditEvaluationController {
         return ResponseEntity.ok(result);
     }
 
-    public CardIssuanceProtocol cardIssuanceRequest(CardIssuanceRequestData data) {
-        try {
-            cardIssuanceRequestPublisher.cardResquet(data);
-            var protocol = UUID.randomUUID().toString();
-            return new CardIssuanceProtocol(protocol);
-        } catch (Exception e) {
-            throw new ErrorCardRequestException(e.getMessage());
-        }
-    }
+
 
 }
