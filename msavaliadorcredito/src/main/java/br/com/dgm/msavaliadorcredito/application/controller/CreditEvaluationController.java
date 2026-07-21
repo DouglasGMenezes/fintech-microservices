@@ -47,6 +47,15 @@ public class CreditEvaluationController {
         return ResponseEntity.ok(result);
     }
 
+    @PostMapping("/card-request")
+    public ResponseEntity cardRequest(@RequestBody CardIssuanceRequestData data) {
+        try {
+            CardIssuanceProtocol cardIssuanceProtocol = creditEvaluationService.cardIssuanceRequest(data);
+            return ResponseEntity.ok(cardIssuanceProtocol);
+        } catch (ErrorCardRequestException e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
 
 
 }
