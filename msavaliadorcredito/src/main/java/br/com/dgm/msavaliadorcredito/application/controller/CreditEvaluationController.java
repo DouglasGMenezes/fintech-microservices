@@ -31,8 +31,8 @@ public class CreditEvaluationController {
         return "OK";
     }
 
-    @GetMapping(value="/custumer-status", params="cpf")
-    public ResponseEntity<CustomerStatusDTO> getStatusCustumerByTaxId(@RequestParam("cpf") String taxId) {
+    @GetMapping(value="/customer-status", params="cpf")
+    public ResponseEntity<CustomerStatusDTO> getStatusCustomerByTaxId(@RequestParam("cpf") String taxId) {
         CustomerStatus customerStatus = creditEvaluationService.getCustomerStatus(taxId);
         CustomerStatusDTO response = CustomerStatusMapper.toDto(customerStatus);
         return ResponseEntity.ok(response);

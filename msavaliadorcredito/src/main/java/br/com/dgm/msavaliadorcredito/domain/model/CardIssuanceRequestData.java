@@ -8,7 +8,7 @@ public class CardIssuanceRequestData {
 
     private Long cardId;
     private String taxId;
-    private String adress;
+    private String address;
     private BigDecimal availableLimit;
 
 }

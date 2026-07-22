@@ -8,7 +8,7 @@ import br.com.dgm.msavaliadorcredito.application.mapper.CustomerDataMapper;
 import br.com.dgm.msavaliadorcredito.domain.model.*;
 import br.com.dgm.msavaliadorcredito.domain.model.enuns.CardBrand;
 import br.com.dgm.msavaliadorcredito.infra.client.CardResourceClient;
-import br.com.dgm.msavaliadorcredito.infra.client.CustomerResouceClient;
+import br.com.dgm.msavaliadorcredito.infra.client.CustomerResourceClient;
 import br.com.dgm.msavaliadorcredito.infra.client.dto.CardCustomerRS;
 import br.com.dgm.msavaliadorcredito.infra.client.dto.CardRS;
 import br.com.dgm.msavaliadorcredito.infra.client.dto.CustomerResponseDTO;
@@ -28,7 +28,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CreditEvaluationService {
 
-    private final CustomerResouceClient customerResouceClient;
+    private final CustomerResourceClient customerResourceClient;
     private final CardResourceClient cardResourceClient;
     private final CardIssuanceRequestPublisher cardIssuanceRequestPublisher;
 
@@ -76,7 +76,7 @@ public class CreditEvaluationService {
 
     public CardIssuanceProtocol cardIssuanceRequest(CardIssuanceRequestData data) {
         try {
-            cardIssuanceRequestPublisher.cardResquet(data);
+            cardIssuanceRequestPublisher.cardRequest(data);
             var protocol = UUID.randomUUID().toString();
             return new CardIssuanceProtocol(protocol);
         } catch (Exception e) {
@@ -122,14 +122,14 @@ public class CreditEvaluationService {
     }
 
     private CustomerData getCustomerDataOrThrow(String taxId) {
-        ResponseEntity<CustomerResponseDTO> response = customerResouceClient.getCustomerByTaxId(taxId);
+        ResponseEntity<CustomerResponseDTO> response = customerResourceClient.getCustomerByTaxId(taxId);
         var body = Optional.ofNullable(response.getBody())
                 .orElseThrow(() -> new CustomerDataNotFoundException(taxId));
         return CustomerDataMapper.toDomain(body);
     }
 
     private List<CustomerCard> getCustomerCardsOrNull(String taxId) {
-        ResponseEntity<List<CardCustomerRS>> response = cardResourceClient.getCardCustumerByTaxId(taxId);
+        ResponseEntity<List<CardCustomerRS>> response = cardResourceClient.getCardCustomerByTaxId(taxId);
         return Optional.ofNullable(response.getBody())
                 .map(CustomerCardMapper::toDomain)
                 .orElse(null);

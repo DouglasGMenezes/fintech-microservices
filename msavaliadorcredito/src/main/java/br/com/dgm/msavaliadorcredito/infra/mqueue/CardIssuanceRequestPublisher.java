@@ -14,11 +14,11 @@ import tools.jackson.databind.ObjectMapper;
 public class CardIssuanceRequestPublisher {
 
     private final RabbitTemplate rabbitTemplate;
-    private final Queue queueCardIssuance;
+    private final Queue cardIssuanceQueue;
 
-    public void cardResquet(CardIssuanceRequestData data) throws JsonProcessingException {
+    public void cardRequest(CardIssuanceRequestData data) throws JsonProcessingException {
         String json = convertIntoJson(data);
-        rabbitTemplate.convertAndSend(queueCardIssuance.getName(), json);
+        rabbitTemplate.convertAndSend(cardIssuanceQueue.getName(), json);
     }
 
     private String convertIntoJson(CardIssuanceRequestData data) throws JsonProcessingException {

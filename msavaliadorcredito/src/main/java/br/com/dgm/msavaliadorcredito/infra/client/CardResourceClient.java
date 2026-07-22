@@ -13,7 +13,7 @@ import java.util.List;
 @FeignClient(value="mscartoes", path="/cartoes")
 public interface CardResourceClient {
     @GetMapping("/{taxId}")
-    ResponseEntity<List<CardCustomerRS>> getCardCustumerByTaxId(@PathVariable("taxId") String taxId);
+    ResponseEntity<List<CardCustomerRS>> getCardCustomerByTaxId(@PathVariable("taxId") String taxId);
 
     @GetMapping("/card-list")
     ResponseEntity<List<CardRS>> getCardListByIncome(@RequestParam("income") BigDecimal income);

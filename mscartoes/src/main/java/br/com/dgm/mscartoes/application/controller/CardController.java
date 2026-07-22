@@ -47,7 +47,7 @@ public class CardController {
     }
 
     @GetMapping("/{taxId}")
-    public ResponseEntity<List<CardCustomerRS>> getCardCustumerByTaxId(@PathVariable("taxId") String taxId) {
+    public ResponseEntity<List<CardCustomerRS>> getCardCustomerByTaxId(@PathVariable("taxId") String taxId) {
         List<CardCustomer> list = cardCustomerService.getByTaxId(taxId);
         List<CardCustomerRS> rs = CardMapper.toListCardCustomerDTO(list);
         return ResponseEntity.ok(rs);

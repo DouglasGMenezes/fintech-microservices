@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(value="msclientes", path="/clientes")
-public interface CustomerResouceClient {
+public interface CustomerResourceClient {
 
     @GetMapping(params="taxId")
     ResponseEntity<CustomerResponseDTO> getCustomerByTaxId(@RequestParam("taxId") String taxId);
