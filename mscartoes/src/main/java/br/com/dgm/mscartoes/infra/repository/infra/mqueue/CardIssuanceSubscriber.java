@@ -7,12 +7,14 @@ import br.com.dgm.mscartoes.infra.repository.CardCustomerRepository;
 import br.com.dgm.mscartoes.infra.repository.CardRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class CardIssuanceSubscriber {
 
     private final CardRepository cardRepository;
@@ -33,7 +35,7 @@ public class CardIssuanceSubscriber {
             cardCustomerRepository.save(cardCustomer);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Erro ao receber solicitação de emissão de cartão: {}", e.getMessage());
         }
     }
 
