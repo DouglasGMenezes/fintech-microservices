@@ -4,8 +4,8 @@ spring:
 
   security:
     user:
-      name: eureka-user
-      password: eureka-pass
+      name: ${EUREKA_USER}
+      password: ${EUREKA_PASS}
 
 
 server:
